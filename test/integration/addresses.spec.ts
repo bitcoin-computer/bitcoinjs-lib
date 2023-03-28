@@ -70,6 +70,7 @@ describe('bitcoinjs-lib (addresses)', () => {
   it('can import a Litecoin address via WIF', () => {
     const keyPair = ECPair.fromWIF(
       'KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn',
+      bitcoin.networks.litecoin,
     );
     const { address } = bitcoin.payments.p2pkh({
       network: bitcoin.networks.litecoin,
@@ -92,7 +93,7 @@ describe('bitcoinjs-lib (addresses)', () => {
     assert.strictEqual(address, '36NUkt6FWUi3LAWBqWRdDmdTWbt91Yvfu7');
   });
 
-  it('can generate a P2SH, pay-to-multisig (2-of-3) address', () => {
+  it('can generate a Litecoin P2SH, pay-to-multisig (2-of-3) address', () => {
     const pubkeys = [
       '026477115981fe981a6918a6297d9803c4dc04f328f22041bedff886bbc2962e01',
       '02c96db2302d19b43d4c69368babace7854cc84eb9e061cde51cfa77ca4a22b8b9',
@@ -121,6 +122,7 @@ describe('bitcoinjs-lib (addresses)', () => {
   it('can generate a Litecoin SegWit address', () => {
     const keyPair = ECPair.fromWIF(
       'KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn',
+      bitcoin.networks.litecoin,
     );
     const { address } = bitcoin.payments.p2wpkh({
       network: bitcoin.networks.litecoin,
@@ -144,6 +146,7 @@ describe('bitcoinjs-lib (addresses)', () => {
   it('can generate a Litecoin SegWit address (via P2SH)', () => {
     const keyPair = ECPair.fromWIF(
       'KwDiBf89QgGbjEhKnhXJuH7LrciVrZi3qYjgd9M7rFU73sVHnoWn',
+      bitcoin.networks.litecoin,
     );
     const { address } = bitcoin.payments.p2sh({
       redeem: bitcoin.payments.p2wpkh({
