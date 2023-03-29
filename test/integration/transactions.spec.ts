@@ -5,10 +5,12 @@ import ECPairFactory from 'ecpair';
 import { describe, it } from 'mocha';
 import * as bitcoin from '../..';
 import { regtestUtils } from './_regtest';
+import { regtestLitecoinUtils } from './_regtest';
 
 const ECPair = ECPairFactory(ecc);
 const rng = require('randombytes');
-const regtest = regtestUtils.network;
+bitcoin.initEccLib(ecc);
+let regtest = regtestUtils.network;
 const bip32 = BIP32Factory(ecc);
 
 const validator = (
@@ -18,13 +20,19 @@ const validator = (
 ): boolean => ECPair.fromPublicKey(pubkey).verify(msghash, signature);
 
 // See bottom of file for some helper functions used to make the payment objects needed.
+let chain = 'BTC';
+before(async () => {
+  chain = await regtestUtils.chain();
+  regtest =
+    chain === 'LTC' ? regtestLitecoinUtils.network : regtestUtils.network;
+});
 
 describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create a 1-to-1 Transaction', () => {
     const alice = ECPair.fromWIF(
       'L2uPYXe17xSTqbCjZvL2DsyXPCbXspvcu5mHLDYUgzdUbZGSKrSr',
     );
-    const psbt = new bitcoin.Psbt();
+    const psbt = new bitcoin.Psbt({ network: regtest });
     psbt.setVersion(2); // These are defaults. This line is not needed.
     psbt.setLocktime(0); // These are defaults. This line is not needed.
     psbt.addInput({
@@ -65,22 +73,37 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
       //   redeemScript. A Buffer of the redeemScript for P2SH
       //   witnessScript. A Buffer of the witnessScript for P2WSH
     });
+    const sendAddress =
+      chain === 'LTC'
+        ? 'rltc1pgrlf9g8peg9yrwptm0mywp3af5zyaf327txf4fepgvc2lcg4y7eq99z4g8'
+        : '1KRMKfeZcmosxALVYESdPNez1AP1mEtywp';
     psbt.addOutput({
-      address: '1KRMKfeZcmosxALVYESdPNez1AP1mEtywp',
+      address: sendAddress,
       value: 80000,
     });
     psbt.signInput(0, alice);
     psbt.validateSignaturesOfInput(0, validator);
     psbt.finalizeAllInputs();
-    assert.strictEqual(
-      psbt.extractTransaction().toHex(),
-      '02000000013ebc8203037dda39d482bf41ff3be955996c50d9d4f7cfc3d2097a694a7' +
-        'b067d000000006b483045022100931b6db94aed25d5486884d83fc37160f37f3368c0' +
-        'd7f48c757112abefec983802205fda64cff98c849577026eb2ce916a50ea70626a766' +
-        '9f8596dd89b720a26b4d501210365db9da3f8a260078a7e8f8b708a1161468fb2323f' +
-        'fda5ec16b261ec1056f455ffffffff0180380100000000001976a914ca0d36044e0dc' +
-        '08a22724efa6f6a07b0ec4c79aa88ac00000000',
-    );
+    if (chain === 'LTC')
+      assert.strictEqual(
+        psbt.extractTransaction().toHex(),
+        '02000000013ebc8203037dda39d482bf41ff3be955996c50d9d4f7cfc3d2097a694a7' +
+          'b067d000000006a47304402201b893c59d39f21ce6df52dd78dd698744640bdb5ce88' +
+          'ce334fef0e71499db62d02203d563824f631676dd01be61e5d27a2999a0fa5adf3d60' +
+          '97d5da6db096692c8c101210365db9da3f8a260078a7e8f8b708a1161468fb2323ffd' +
+          'a5ec16b261ec1056f455ffffffff01803801000000000022512040fe92a0e1ca0a41b' +
+          '82bdbf647063d4d044ea62af2cc9aa7214330afe11527b200000000',
+      );
+    else
+      assert.strictEqual(
+        psbt.extractTransaction().toHex(),
+        '02000000013ebc8203037dda39d482bf41ff3be955996c50d9d4f7cfc3d2097a694a7' +
+          'b067d000000006b483045022100931b6db94aed25d5486884d83fc37160f37f3368c0' +
+          'd7f48c757112abefec983802205fda64cff98c849577026eb2ce916a50ea70626a766' +
+          '9f8596dd89b720a26b4d501210365db9da3f8a260078a7e8f8b708a1161468fb2323f' +
+          'fda5ec16b261ec1056f455ffffffff0180380100000000001976a914ca0d36044e0dc' +
+          '08a22724efa6f6a07b0ec4c79aa88ac00000000',
+      );
   });
 
   it('can create (and broadcast via 3PBP) a typical Transaction', async () => {
@@ -250,11 +273,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   });
 
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2SH(P2WPKH) input', async () => {
-    const network =
-      (await regtestUtils.chain()) === 'LTC'
-        ? bitcoin.networks.litecoinregtest
-        : regtestUtils.network;
-    const p2sh = createPayment('p2sh-p2wpkh', undefined, network);
+    const p2sh = createPayment('p2sh-p2wpkh', undefined, regtest);
     const inputData = await getInputData(5e4, p2sh.payment, true, 'p2sh');
     const inputData2 = await getInputData(5e4, p2sh.payment, true, 'p2sh');
     {
@@ -279,7 +298,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
       value: 7e4,
     };
 
-    const tx = new bitcoin.Psbt()
+    const tx = new bitcoin.Psbt({ network: regtest })
       .addInputs([inputData, inputData2])
       .addOutputs([outputData, outputData2])
       .signAllInputs(keyPair)
@@ -300,11 +319,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2SH(P2WPKH) input with nonWitnessUtxo', async () => {
     // For learning purposes, ignore this test.
     // REPEATING ABOVE BUT WITH nonWitnessUtxo by passing false to getInputData
-    const network =
-      (await regtestUtils.chain()) === 'LTC'
-        ? bitcoin.networks.litecoinregtest
-        : regtestUtils.network;
-    const p2sh = createPayment('p2sh-p2wpkh', undefined, network);
+    const p2sh = createPayment('p2sh-p2wpkh', undefined, regtest);
     const inputData = await getInputData(5e4, p2sh.payment, false, 'p2sh');
     const inputData2 = await getInputData(5e4, p2sh.payment, false, 'p2sh');
     const keyPair = p2sh.keys[0];
@@ -316,7 +331,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
       script: p2sh.payment.output,
       value: 7e4,
     };
-    const tx = new bitcoin.Psbt()
+    const tx = new bitcoin.Psbt({ network: regtest })
       .addInputs([inputData, inputData2])
       .addOutputs([outputData, outputData2])
       .signAllInputs(keyPair)
