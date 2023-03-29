@@ -1,7 +1,9 @@
-# BitcoinJS (bitcoinjs-lib)
+# MulticoinJS (multicoinjs-lib)
 [![Github CI](https://github.com/bitcoinjs/bitcoinjs-lib/actions/workflows/main_ci.yml/badge.svg)](https://github.com/bitcoinjs/bitcoinjs-lib/actions/workflows/main_ci.yml) [![NPM](https://img.shields.io/npm/v/bitcoinjs-lib.svg)](https://www.npmjs.org/package/bitcoinjs-lib) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-A javascript Bitcoin library for node.js and browsers. Written in TypeScript, but committing the JS files to verify.
+This project is a fork of the original [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib/) library with the addition of support for other UTXOs based blockchains. Currently supports Bitcoin and Litecoin.
+
+A javascript Bitcoin and Litecoin library for node.js and browsers. Written in TypeScript, but committing the JS files to verify.
 
 Released under the terms of the [MIT LICENSE](LICENSE).
 
@@ -13,7 +15,7 @@ Master is not stable; it is our development branch, and [only tagged releases ma
 ## Can I trust this code?
 > Don't trust. Verify.
 
-We recommend every user of this library and the [bitcoinjs](https://github.com/bitcoinjs) ecosystem audit and verify any underlying code for its validity and suitability,  including reviewing any and all of your project's dependencies.
+We recommend every user of this library and the [multicoinjs](https://github.com/bitcoin-computer/multicoinjs-lib) ecosystem audit and verify any underlying code for its validity and suitability,  including reviewing any and all of your project's dependencies.
 
 Mistakes and bugs happen, but with your help in resolving and reporting [issues](https://github.com/bitcoinjs/bitcoinjs-lib/issues), together we can produce open source software that is:
 
@@ -25,15 +27,15 @@ Mistakes and bugs happen, but with your help in resolving and reporting [issues]
 
 
 ## Documentation
-Presently,  we do not have any formal documentation other than our [examples](#examples), please [ask for help](https://github.com/bitcoinjs/bitcoinjs-lib/issues/new) if our examples aren't enough to guide you.
+Presently, we do not have any formal documentation other than our [examples](#examples), please [ask for help](https://github.com/bitcoinjs/bitcoinjs-lib/issues/new) if our examples aren't enough to guide you.
 
 You can find a [Web UI](https://bitcoincore.tech/apps/bitcoinjs-ui/index.html) that covers most of the `psbt.ts`, `transaction.ts` and `p2*.ts` APIs [here](https://bitcoincore.tech/apps/bitcoinjs-ui/index.html).
 
 ## Installation
 ``` bash
-npm install bitcoinjs-lib
+yarn install @bitcoin-computer/multicoinjs-lib
 # optionally, install a key derivation library as well
-npm install ecpair bip32
+yarn install ecpair bip32
 # ecpair is the ECPair class for single keys
 # bip32 is for generating HD keys
 ```
@@ -75,14 +77,14 @@ We are not an authoritative source of best practice, but, at the very least:
 * Lastly, if you can, use [Typescript](https://www.typescriptlang.org/) or similar.
 
 
-### Browser
-The recommended method of using `bitcoinjs-lib` in your browser is through [browserify](http://browserify.org/).
+<!-- ### Browser
+The recommended method of using `multicoinjs-lib` in your browser is through [browserify](http://browserify.org/).
 
 If you'd like to use a different (more modern) build tool than `browserify`, you can compile just this library and its dependencies into a single JavaScript file:
 
 ```sh
-$ npm install bitcoinjs-lib browserify
-$ npx browserify --standalone bitcoin - -o bitcoinjs-lib.js <<<"module.exports = require('bitcoinjs-lib');"
+$ npm install @bitcoin-computer/multicoinjs-lib browserify
+$ npx browserify --standalone bitcoin - -o multicoinjs-lib.js <<<"module.exports = require('@bitcoin-computer/multicoinjs-lib');"
 ```
 
 Which you can then import as an ESM module:
@@ -93,7 +95,7 @@ Which you can then import as an ESM module:
 
 **NOTE**: We use Node Maintenance LTS features, if you need strict ES5, use [`--transform babelify`](https://github.com/babel/babelify) in conjunction with your `browserify` step (using an [`es2015`](https://babeljs.io/docs/plugins/preset-es2015/) preset).
 
-**WARNING**: iOS devices have [problems](https://github.com/feross/buffer/issues/136), use at least [buffer@5.0.5](https://github.com/feross/buffer/pull/155) or greater,  and enforce the test suites (for `Buffer`, and any other dependency) pass before use.
+**WARNING**: iOS devices have [problems](https://github.com/feross/buffer/issues/136), use at least [buffer@5.0.5](https://github.com/feross/buffer/pull/155) or greater,  and enforce the test suites (for `Buffer`, and any other dependency) pass before use. -->
 
 ### Typescript or VSCode users
 Type declarations for Typescript are included in this library. Normal installation should include all the needed type information.
