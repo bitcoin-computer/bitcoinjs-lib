@@ -1,14 +1,15 @@
 {
-  "name": "bitcoinjs-lib",
+  "name": "@bitcoin-computer/multicoinjs-lib",
   "version": "6.1.0",
-  "description": "Client-side Bitcoin JavaScript library",
+  "description": "Client-side Bitcoin and Litecoin JavaScript library",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "engines": {
     "node": ">=8.0.0"
   },
   "keywords": [
-    "bitcoinjs",
+    "multicoinjs",
+    "litecoin",
     "bitcoin",
     "browserify",
     "javascript",
@@ -43,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bitcoinjs/bitcoinjs-lib.git"
+    "url": "https://github.com/bitcoin-computer/multicoinjs-lib.git"
   },
   "files": [
     "src"
