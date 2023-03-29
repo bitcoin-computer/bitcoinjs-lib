@@ -250,7 +250,11 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   });
 
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2SH(P2WPKH) input', async () => {
-    const p2sh = createPayment('p2sh-p2wpkh');
+    const network =
+      (await regtestUtils.chain()) === 'LTC'
+        ? bitcoin.networks.litecoinregtest
+        : regtestUtils.network;
+    const p2sh = createPayment('p2sh-p2wpkh', undefined, network);
     const inputData = await getInputData(5e4, p2sh.payment, true, 'p2sh');
     const inputData2 = await getInputData(5e4, p2sh.payment, true, 'p2sh');
     {
@@ -296,7 +300,11 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2SH(P2WPKH) input with nonWitnessUtxo', async () => {
     // For learning purposes, ignore this test.
     // REPEATING ABOVE BUT WITH nonWitnessUtxo by passing false to getInputData
-    const p2sh = createPayment('p2sh-p2wpkh');
+    const network =
+      (await regtestUtils.chain()) === 'LTC'
+        ? bitcoin.networks.litecoinregtest
+        : regtestUtils.network;
+    const p2sh = createPayment('p2sh-p2wpkh', undefined, network);
     const inputData = await getInputData(5e4, p2sh.payment, false, 'p2sh');
     const inputData2 = await getInputData(5e4, p2sh.payment, false, 'p2sh');
     const keyPair = p2sh.keys[0];
