@@ -8,12 +8,13 @@
     "node": ">=8.0.0"
   },
   "keywords": [
-    "multicoinjs",
-    "litecoin",
+    "bitcoinjs",
     "bitcoin",
-    "browserify",
-    "javascript",
-    "bitcoinjs"
+    "litecoinjs",
+    "litecoin",
+    "dogecoinjs",
+    "dogecoin",
+    "javascript"
   ],
   "scripts": {
     "audit": "better-npm-audit audit -l high",
