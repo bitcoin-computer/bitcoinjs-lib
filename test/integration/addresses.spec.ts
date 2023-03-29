@@ -9,7 +9,7 @@ const ECPair = ECPairFactory(ecc);
 const dhttp = regtestUtils.dhttp;
 const TESTNET = bitcoin.networks.testnet;
 
-describe('bitcoinjs-lib (addresses)', () => {
+describe('multicoinjs-lib (addresses)', () => {
   it(
     'can generate a random address [and support the retrieval of ' +
       'transactions for that address (via 3PBP)]',
@@ -227,7 +227,6 @@ describe('bitcoinjs-lib (addresses)', () => {
   });
 
   it('can generate a Litecoin address', () => {
-    // WARNING: although possible, bitcoinjs is NOT necessarily compatible with Litecoin
     const LITECOIN = {
       messagePrefix: '\x19Litecoin Signed Message:\n',
       bech32: 'ltc',
