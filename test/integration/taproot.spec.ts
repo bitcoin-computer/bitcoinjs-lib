@@ -5,8 +5,7 @@ import ECPairFactory from 'ecpair';
 import * as ecc from 'tiny-secp256k1';
 import { describe, it } from 'mocha';
 import { PsbtInput, TapLeafScript } from 'bip174/src/lib/interfaces';
-import { regtestUtils } from './_regtest';
-import { regtestLitecoinUtils } from './_regtest';
+import { regtestUtils, regtestLitecoinUtils } from './_regtest';
 import * as bitcoin from '../..';
 import { Taptree } from '../../src/types';
 import { toXOnly, tapTreeToList, tapTreeFromList } from '../../src/psbt/bip371';
@@ -583,13 +582,12 @@ describe('multicoinjs-lib (transaction with taproot)', () => {
 
       const sendInternalKey = bip32.fromSeed(rng(64), regtest);
       const sendPubKey = toXOnly(sendInternalKey.publicKey);
-      const { address } = bitcoin.payments.p2tr({
+      const { address: sendAddress } = bitcoin.payments.p2tr({
         internalPubkey: sendPubKey,
         scriptTree,
         network: regtest,
       });
-      assert(address, 'address should be defined');
-      const sendAddress = address;
+      assert(sendAddress, 'address should be defined');
       psbt.addOutput({
         value: sendAmount,
         address: sendAddress!,

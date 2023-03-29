@@ -4,8 +4,7 @@ import * as ecc from 'tiny-secp256k1';
 import ECPairFactory from 'ecpair';
 import { describe, it } from 'mocha';
 import * as bitcoin from '../..';
-import { regtestUtils } from './_regtest';
-import { regtestLitecoinUtils } from './_regtest';
+import { regtestUtils, regtestLitecoinUtils } from './_regtest';
 
 const ECPair = ECPairFactory(ecc);
 const rng = require('randombytes');

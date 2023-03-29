@@ -32,6 +32,7 @@ describe('multicoinjs-lib (addresses)', () => {
     },
   );
 
+  // TODO: use another API or another way for querying balance of an address
   it.skip(
     'can generate a random address for Litecoin [and support the retrieval of ' +
       'transactions for that address (via 3PBP)]',
@@ -45,7 +46,6 @@ describe('multicoinjs-lib (addresses)', () => {
       // bitcoin P2PKH addresses start with a '1'
       assert.strictEqual(address!.startsWith('L'), true);
 
-      // TODO: use another API or another way for querying balance of an address
       const result = await dhttp({
         method: 'GET',
         url: 'https://blockchain.info/rawaddr/' + address,
