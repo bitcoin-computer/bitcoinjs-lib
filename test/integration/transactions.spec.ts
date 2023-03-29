@@ -108,8 +108,8 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
 
   it('can create (and broadcast via 3PBP) a typical Transaction', async () => {
     // these are { payment: Payment; keys: ECPair[] }
-    const alice1 = createPayment('p2pkh');
-    const alice2 = createPayment('p2pkh');
+    const alice1 = createPayment('p2pkh', undefined, regtest);
+    const alice2 = createPayment('p2pkh', undefined, regtest);
 
     // give Alice 2 unspent outputs
     const inputData1 = await getInputData(
@@ -194,7 +194,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   });
 
   it('can create (and broadcast via 3PBP) a Transaction with an OP_RETURN output', async () => {
-    const alice1 = createPayment('p2pkh');
+    const alice1 = createPayment('p2pkh', undefined, regtest);
     const inputData1 = await getInputData(
       2e5,
       alice1.payment,
@@ -225,7 +225,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   });
 
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2SH(P2MS(2 of 4)) (multisig) input', async () => {
-    const multisig = createPayment('p2sh-p2ms(2 of 4)');
+    const multisig = createPayment('p2sh-p2ms(2 of 4)', undefined, regtest);
     const inputData1 = await getInputData(2e4, multisig.payment, false, 'p2sh');
     {
       const {
@@ -349,7 +349,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2WPKH input', async () => {
     // the only thing that changes is you don't give a redeemscript for input data
 
-    const p2wpkh = createPayment('p2wpkh');
+    const p2wpkh = createPayment('p2wpkh', undefined, regtest);
     const inputData = await getInputData(5e4, p2wpkh.payment, true, 'noredeem');
     {
       const { hash, index, witnessUtxo } = inputData;
@@ -383,7 +383,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2WPKH input with nonWitnessUtxo', async () => {
     // For learning purposes, ignore this test.
     // REPEATING ABOVE BUT WITH nonWitnessUtxo by passing false to getInputData
-    const p2wpkh = createPayment('p2wpkh');
+    const p2wpkh = createPayment('p2wpkh', undefined, regtest);
     const inputData = await getInputData(
       5e4,
       p2wpkh.payment,
@@ -409,7 +409,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   });
 
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2WSH(P2PK) input', async () => {
-    const p2wsh = createPayment('p2wsh-p2pk');
+    const p2wsh = createPayment('p2wsh-p2pk', undefined, regtest);
     const inputData = await getInputData(5e4, p2wsh.payment, true, 'p2wsh');
     {
       const {
@@ -451,7 +451,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
   it('can create (and broadcast via 3PBP) a Transaction, w/ a P2WSH(P2PK) input with nonWitnessUtxo', async () => {
     // For learning purposes, ignore this test.
     // REPEATING ABOVE BUT WITH nonWitnessUtxo by passing false to getInputData
-    const p2wsh = createPayment('p2wsh-p2pk');
+    const p2wsh = createPayment('p2wsh-p2pk', undefined, regtest);
     const inputData = await getInputData(5e4, p2wsh.payment, false, 'p2wsh');
     const psbt = new bitcoin.Psbt({ network: regtest })
       .addInput(inputData)
@@ -475,7 +475,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
     'can create (and broadcast via 3PBP) a Transaction, w/ a ' +
       'P2SH(P2WSH(P2MS(3 of 4))) (SegWit multisig) input',
     async () => {
-      const p2sh = createPayment('p2sh-p2wsh-p2ms(3 of 4)');
+      const p2sh = createPayment('p2sh-p2wsh-p2ms(3 of 4)', undefined, regtest);
       const inputData = await getInputData(
         5e4,
         p2sh.payment,
@@ -531,7 +531,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
     async () => {
       // For learning purposes, ignore this test.
       // REPEATING ABOVE BUT WITH nonWitnessUtxo by passing false to getInputData
-      const p2sh = createPayment('p2sh-p2wsh-p2ms(3 of 4)');
+      const p2sh = createPayment('p2sh-p2wsh-p2ms(3 of 4)', undefined, regtest);
       const inputData = await getInputData(
         5e4,
         p2sh.payment,
@@ -568,7 +568,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
         myKey,
         ECPair.fromPrivateKey(myKey.privateKey!, { network: regtest }),
       ];
-      const p2sh = createPayment('p2sh-p2ms(2 of 2)', myKeys);
+      const p2sh = createPayment('p2sh-p2ms(2 of 2)', myKeys, regtest);
       const inputData = await getInputData(5e4, p2sh.payment, false, 'p2sh');
       const psbt = new bitcoin.Psbt({ network: regtest })
         .addInput(inputData)
@@ -613,7 +613,7 @@ describe('bitcoinjs-lib (transactions with psbt)', () => {
         },
       ],
     };
-    const p2wpkh = createPayment('p2wpkh', [childNode]);
+    const p2wpkh = createPayment('p2wpkh', [childNode], regtest);
     const inputData = await getInputData(5e4, p2wpkh.payment, true, 'noredeem');
     {
       const { hash, index, witnessUtxo } = inputData;
