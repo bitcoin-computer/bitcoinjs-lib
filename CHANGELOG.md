@@ -1,6 +1,6 @@
 # 6.1.1
 __added__
-- Litecoin support added. 
+- Litecoin support.
 
 __changed__
 - Using from @bitcoin-computer/multicoinjs-client instead of regtest-client
