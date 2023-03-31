@@ -1,3 +1,10 @@
+# 6.1.1
+__added__
+- Litecoin support.
+
+__changed__
+- Using from @bitcoin-computer/multicoinjs-client instead of regtest-client
+
 # 6.1.0
 __added__
 - taproot support for payments (p2tr) and PSBT. See taproot.spec.ts integration test for examples. (#1742)

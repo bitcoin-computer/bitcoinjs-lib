@@ -1,12 +1,7 @@
 
 [//]: # (This is partially derived from https://github.com/bitcoin/bitcoin/blob/6579d80572d2d33aceabbd3db45a6a9f809aa5e3/CONTRIBUTING.md)
 
-# Contributing to bitcoinjs-lib
-Firstly in terms of structure, there is no particular concept of "bitcoinjs developers" in a sense of privileged people.
-Open source revolves around a meritocracy where contributors who help gain trust from the community.
-
-For practical purpose, there are repository "maintainers" who are responsible for merging pull requests.
-
+# Contributing to multicoinjs-lib
 We are always accepting of pull requests, but we do adhere to specific standards in regards to coding style, test driven development and commit messages.
 
 
@@ -14,9 +9,8 @@ We are always accepting of pull requests, but we do adhere to specific standards
 GitHub is the preferred method of communication between members.
 
 Otherwise, in order of preference:
-* bitcoinjs.slack.com
-* #bitcoinjs-dev on Freenode IRC
-
+* Telegram group: https://t.me/thebitcoincomputer
+* Twitter: https://twitter.com/thebitcointoken
 
 ## Workflow
 The codebase is maintained using the "contributor workflow" where everyone without exception contributes patch proposals using "pull requests".
@@ -28,7 +22,7 @@ To contribute a patch, the workflow is as follows:
   1. Create topic branch
   1. Commit patches
   1. Push changes to your fork
-  1. Submit a pull request to https://github.com/bitcoinjs/bitcoinjs-lib
+  1. Submit a pull request to https://github.com/bitcoin-computer/multicoinjs-lib/pulls
 
 [Commits should be atomic](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) and diffs easy to read.
 
@@ -36,7 +30,7 @@ If your pull request is accepted for merging, you may be asked by a maintainer t
 
 Please refrain from creating several pull requests for the same change.
 
-Patchsets should be focused:
+Patches should be focused:
 
 	* Adding a feature, or
 	* Fixing a bug, or
@@ -63,21 +57,3 @@ Some rules regarding TypeScript:
 * Submit your pull request.
 
 Using TypeScript is for preventing bugs while writing code, as well as automatically generating type definitions. However, the JS file diffs must be verified, and any unverified JS will not be published to npm.
-
-
-## We adhere to Bitcoin-Core policy
-Bitcoin script payment/script templates are based on community consensus,  but typically adhere to bitcoin-core node policy by default.
-
-- `bitcoinjs.script.decompile` is consensus bound only,  it does not reject based on policy.
-- `bitcoinjs.script.compile` will try to adhere to bitcoin-core `IsStandard` policies rules. (eg. minimalpush in https://github.com/bitcoinjs/bitcoinjs-lib/pull/638)
-
-Any elliptic curve `sign` operations should adhere to `IsStandard` policies, like `LOW_S`, but `verify` should not reject them [by default].
-
-If you need non-standard rejecting `decoding`, you should use an external module,  not this library.
-
-#### TLDR
-Where "standards compliant" refers to the default policies of bitcoin-core,  we adhere to the following:
-- Any "creation" event must create standards-compliant data (standards bound)
-- Any "validation" event must allow for non-standards compliant data (consensus bound)
-
-For stricter validation,  use an external module which we [may have] provided.

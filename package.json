@@ -1,6 +1,6 @@
 {
   "name": "@bitcoin-computer/multicoinjs-lib",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Client-side Bitcoin and Litecoin JavaScript library",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -85,7 +85,7 @@
     "prettier": "^2.8.0",
     "proxyquire": "^2.0.1",
     "randombytes": "^2.1.0",
-    "regtest-client": "0.2.0",
+    "@bitcoin-computer/multicoinjs-client": "0.2.1",
     "rimraf": "^2.6.3",
     "tiny-secp256k1": "^2.2.0",
     "ts-node": "^8.3.0",

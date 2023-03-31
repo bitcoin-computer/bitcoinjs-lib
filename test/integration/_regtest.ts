@@ -1,5 +1,5 @@
 import * as bitcoin from '../../src/index';
-import { RegtestUtils } from 'regtest-client';
+import { RegtestUtils } from '@bitcoin-computer/multicoinjs-client';
 
 const APIPASS = process.env.APIPASS || 'satoshi';
 const APIURL = process.env.APIURL || 'http://localhost:5001/1';
