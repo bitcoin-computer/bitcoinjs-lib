@@ -8,10 +8,10 @@ import { PsbtInput, TapLeafScript } from 'bip174/src/lib/interfaces';
 import { regtestUtils, regtestLitecoinUtils } from './_regtest';
 import * as bitcoin from '../..';
 import { Taptree } from '../../src/types';
-import { toXOnly, tapTreeToList, tapTreeFromList } from '../../src/psbt/bip371';
 import { witnessStackToScriptWitness } from '../../src/psbt/psbtutils';
 import { TapLeaf } from 'bip174/src/lib/interfaces';
 
+const { toXOnly, tapTreeToList, tapTreeFromList } = bitcoin.bip371;
 const rng = require('randombytes');
 bitcoin.initEccLib(ecc);
 const bip32 = BIP32Factory(ecc);

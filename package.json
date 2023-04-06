@@ -1,6 +1,6 @@
 {
   "name": "@bitcoin-computer/multicoinjs-lib",
-  "version": "6.1.1",
+  "version": "6.1.2",
   "description": "Client-side Bitcoin and Litecoin JavaScript library",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",

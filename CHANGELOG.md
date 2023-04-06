@@ -1,3 +1,7 @@
+# 6.1.2
+__added__
+- ``bip371``export. 
+
 # 6.1.1
 __added__
 - Litecoin support.
