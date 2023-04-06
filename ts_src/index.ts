@@ -3,6 +3,7 @@ import * as crypto from './crypto';
 import * as networks from './networks';
 import * as payments from './payments';
 import * as script from './script';
+import * as bip371 from './psbt/bip371';
 
 export { address, crypto, networks, payments, script };
 
@@ -30,3 +31,5 @@ export {
 } from './payments';
 export { Input as TxInput, Output as TxOutput } from './transaction';
 export { initEccLib } from './ecc_lib';
+
+export { bip371 };
