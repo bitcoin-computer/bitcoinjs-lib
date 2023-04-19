@@ -1,3 +1,7 @@
+# 6.1.3
+__added__
+- ``bufferUtils``export. 
+
 # 6.1.2
 __added__
 - ``bip371``export. 

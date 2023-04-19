@@ -6,6 +6,7 @@ exports.bip371 =
   exports.opcodes =
   exports.Psbt =
   exports.Block =
+  exports.bufferUtils =
   exports.script =
   exports.payments =
   exports.networks =
@@ -24,6 +25,8 @@ const script = require('./script');
 exports.script = script;
 const bip371 = require('./psbt/bip371');
 exports.bip371 = bip371;
+const bufferUtils = require('./bufferutils');
+exports.bufferUtils = bufferUtils;
 var block_1 = require('./block');
 Object.defineProperty(exports, 'Block', {
   enumerable: true,
