@@ -220,6 +220,24 @@ export class Psbt {
     });
   }
 
+  get outputsAmount(): number {
+    return this.txOutputs.reduce((total, o) => total + o.value, 0);
+  }
+
+  get inputsAmount(): number {
+    const inputsAmounts = this.data.inputs.map((input, index) => {
+      if (input.witnessUtxo) return input.witnessUtxo.value;
+      else if (input.nonWitnessUtxo) {
+        const txin = this.txInputs[index];
+        return Transaction.fromBuffer(input.nonWitnessUtxo).outs[txin.index]
+          .value;
+      } else {
+        throw new Error('Could not get input of #' + index);
+      }
+    });
+    return inputsAmounts.reduce((total, amount) => total + amount, 0) as number;
+  }
+
   combine(...those: Psbt[]): this {
     this.data.combine(...those.map(o => o.data));
     return this;
