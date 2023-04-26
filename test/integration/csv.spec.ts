@@ -218,7 +218,7 @@ describe('multicoinjs-lib (transactions w/ CSV)', () => {
       }).input;
       tx.setInputScript(0, redeemScriptSig!);
 
-      await regtestUtils.broadcast(tx.toHex()).catch(err => {
+      await regtestUtils.broadcast(tx.toHex()).catch((err: any) => {
         assert.throws(() => {
           if (err) throw err;
         }, /Error: non-BIP68-final/);
