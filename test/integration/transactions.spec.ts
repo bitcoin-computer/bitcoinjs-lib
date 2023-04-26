@@ -26,7 +26,7 @@ before(async () => {
     chain === 'LTC' ? regtestLitecoinUtils.network : regtestUtils.network;
 });
 
-describe('multicoinjs-lib (transactions with psbt)', () => {
+describe('nakamotojs-lib (transactions with psbt)', () => {
   it('can create a 1-to-1 Transaction', () => {
     const alice = ECPair.fromWIF(
       'L2uPYXe17xSTqbCjZvL2DsyXPCbXspvcu5mHLDYUgzdUbZGSKrSr',
@@ -200,7 +200,7 @@ describe('multicoinjs-lib (transactions with psbt)', () => {
       'noredeem',
     );
 
-    const data = Buffer.from('multicoinjs-lib', 'utf8');
+    const data = Buffer.from('nakamotojs-lib', 'utf8');
     const embed = bitcoin.payments.embed({ data: [data] });
 
     const psbt = new bitcoin.Psbt({ network: regtest })
