@@ -1,3 +1,8 @@
+# 6.1.4
+__fixed__
+- ``inputFinalizeGetAmts`` now includes an extra parameter to disable the fee check. Now it is possible to use 
+- Add getters for input and output amounts of psbt transactions.
+
 # 6.1.3
 __added__
 - ``bufferUtils``export. 
